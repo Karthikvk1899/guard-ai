@@ -1,0 +1,30 @@
+name: Guard-AI Security Scan
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  guard-ai-scan:
+    name: Run Guard-AI Linter
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Guard-AI
+        run: |
+          python -m pip install --upgrade pip
+          pip install .
+
+      - name: Run Guard-AI Security Scan
+        run: |
+          guard-ai scan . --fail-on HIGH
