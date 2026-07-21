@@ -1,0 +1,7 @@
+- id: guard-ai
+  name: guard-ai security linter
+  description: Shield your codebase from AI-generated security risks and hallucinated packages.
+  entry: guard-ai scan
+  language: python
+  types: [text]
+  pass_filenames: false
