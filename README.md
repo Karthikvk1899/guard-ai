@@ -52,3 +52,16 @@ repos:
     hooks:
       - id: guard-ai
         args: ["--fail-on", "HIGH"]
+
+
+## ?? Pre-Commit Hook Integration
+
+Want to catch AI risks *before* you even commit? Add guard-ai to your project's .pre-commit-config.yaml:
+
+`yaml
+repos:
+  - repo: [https://github.com/Karthikvk1899/guard-ai](https://github.com/Karthikvk1899/guard-ai)
+    rev: v1.0.0
+    hooks:
+      - id: guard-ai
+        args: ["--fail-on", "HIGH"]
