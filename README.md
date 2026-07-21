@@ -1,4 +1,4 @@
-# ??? guard-ai
+# guard-ai
 
 > **Automated linter that catches AI-generated vulnerabilities, hallucinated dependencies, and code truncations before they hit production.**
 
