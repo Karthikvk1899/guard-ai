@@ -1,16 +1,16 @@
 import sqlite3
 import time
 from pathlib import Path
-from typing import Optional
+
 
 class PackageCache:
     """SQLite cache engine for package availability lookups (PyPI & NPM)."""
 
-    def __init__(self, db_path: Optional[Path] = None):
+    def __init__(self, db_path: Path | None = None):
         if db_path is None:
             cache_dir = Path.home() / ".guard_ai"
             cache_dir.mkdir(parents=True, exist_ok=True)
-            db_path = cache_dir / "cache.db"
+            db_path = cache_dir / "cache-v2.db"
 
         self.db_path = db_path
         self._init_db()
@@ -29,7 +29,7 @@ class PackageCache:
             """)
             conn.commit()
 
-    def get(self, registry: str, package_name: str, max_age_seconds: float = 86400) -> Optional[bool]:
+    def get(self, registry: str, package_name: str, max_age_seconds: float = 86400) -> bool | None:
         """
         Check if package status is cached and not expired (default TTL: 24 hrs).
         """
@@ -39,7 +39,7 @@ class PackageCache:
             cursor = conn.cursor()
             cursor.execute(
                 "SELECT is_exists, timestamp FROM package_cache WHERE registry = ? AND package_name = ?",
-                (reg_key, pkg_key)
+                (reg_key, pkg_key),
             )
             row = cursor.fetchone()
             if not row:
@@ -61,6 +61,6 @@ class PackageCache:
                 INSERT OR REPLACE INTO package_cache (registry, package_name, is_exists, timestamp)
                 VALUES (?, ?, ?, ?)
                 """,
-                (reg_key, pkg_key, int(exists), time.time())
+                (reg_key, pkg_key, int(exists), time.time()),
             )
             conn.commit()

@@ -1,7 +1,8 @@
 - id: guard-ai
-  name: guard-ai security linter
-  description: Shield your codebase from AI-generated security risks and hallucinated packages.
-  entry: guard-ai scan
+  name: Guard-AI heuristic source review
+  description: Review suspicious source patterns; no automatic rewriting or registry requests by default.
+  entry: guard-ai scan . --fail-on HIGH
   language: python
+  language_version: python3
   types: [text]
   pass_filenames: false
